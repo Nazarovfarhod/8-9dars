@@ -9,7 +9,6 @@ export const getFormData = (form: any) => {
   const data: any = new FormData(form);
   const obj = {};
   for (const [key, value] of data.entries()) obj[key] = value;
-  console.log(obj);
 
   return obj;
 };

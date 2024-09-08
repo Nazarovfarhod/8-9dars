@@ -19,3 +19,20 @@ export const login = async (data) => {
 
   console.log(res);
 };
+
+export const getFlowers = async (token) => {
+  const res = await fetch(BASE_URL + "/gullar", {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (res.status === 200 || res.status === 201) {
+    await res.json();
+  } else {
+    throw new Error("Nimadir hatolik bo'ldi");
+  }
+
+  console.log(res);
+};

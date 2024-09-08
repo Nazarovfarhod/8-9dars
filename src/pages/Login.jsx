@@ -18,7 +18,8 @@ export default function Login() {
     const result = getFormData(e.target);
     setLoading(true);
     setAdmin(result);
-    console.log(admin && admin);
+    console.log(result);
+
     login(result)
       .then(() => {
         toast.success("Siz saytga muvaffaqiyatli kirdingiz!");

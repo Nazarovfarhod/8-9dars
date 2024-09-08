@@ -2,5 +2,7 @@ import { create } from "zustand";
 
 export const useAppStore = create((set) => ({
   admin: null,
-  setAdmin: (admin) => set((state) => ({ admin: admin })),
+  flowers: null,
+  setAdmin: (admin) => set((state) => ({ admin })),
+  setFlowers: (flowers) => set((state) => ({ flowers })),
 }));
