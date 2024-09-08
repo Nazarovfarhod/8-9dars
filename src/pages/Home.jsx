@@ -5,7 +5,7 @@ import { getFlowers } from "../request";
 export default function Home() {
   const flowers = useAppStore((state) => state.flowers);
   const admin = useAppStore((state) => state.admin);
-  console.log(admin.access_token);
+  console.log(admin);
 
   useEffect(() => {
     getFlowers(admin.token);

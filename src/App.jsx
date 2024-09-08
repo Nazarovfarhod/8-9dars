@@ -11,6 +11,8 @@ import { useAppStore } from "./lib/zustand";
 
 export default function App() {
   const admin = useAppStore((state) => state.admin);
+  console.log(admin);
+
   const routes = createBrowserRouter([
     {
       path: "/",

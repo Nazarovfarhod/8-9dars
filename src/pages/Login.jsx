@@ -12,16 +12,18 @@ export default function Login() {
   const [loadin, setLoading] = useState(false);
   const setAdmin = useAppStore((state) => state.setAdmin);
   const admin = useAppStore((state) => state.admin);
+  console.log(admin);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const result = getFormData(e.target);
     setLoading(true);
-    setAdmin(result);
-    console.log(result);
 
     login(result)
-      .then(() => {
+      .then((res) => {
+        console.log(res);
+
+        setAdmin(res);
         toast.success("Siz saytga muvaffaqiyatli kirdingiz!");
       })
       .catch((err) => toast.error(err.message))

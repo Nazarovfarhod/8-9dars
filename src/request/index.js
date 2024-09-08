@@ -10,14 +10,12 @@ export const login = async (data) => {
   });
 
   if (res.status === 200 || res.status === 201) {
-    await res.json();
+    return await res.json();
   } else if (res.status === 400) {
     throw new Error("Login yoki Parol hato kiritildi");
   } else {
     throw new Error("Nimadir hatolik bo'ldi");
   }
-
-  console.log(res);
 };
 
 export const getFlowers = async (token) => {
