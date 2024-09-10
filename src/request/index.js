@@ -1,4 +1,24 @@
-import { BASE_URL } from "../lib/utils";
+import { BASE_URL } from "../lib/my-utils/index";
+
+export const refreshToken = async (token) => {
+  const res = await fetch(BASE_URL + "/auth/refresh-token", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ refresh_token: token }),
+  });
+
+  if (res.status === 200 || res.status === 201) {
+    await res.json();
+  } else if (res.status == 403) {
+    throw new Error(403);
+  } else {
+    throw new Error("Nimadir hatolik bo'ldi");
+  }
+
+  console.log(res);
+};
 
 export const login = async (data) => {
   const res = await fetch(BASE_URL + "/auth/login", {
@@ -27,10 +47,10 @@ export const getFlowers = async (token) => {
   });
 
   if (res.status === 200 || res.status === 201) {
-    await res.json();
+    return await res.json();
+  } else if (res.status == 403) {
+    throw new Error(403);
   } else {
     throw new Error("Nimadir hatolik bo'ldi");
   }
-
-  console.log(res);
 };

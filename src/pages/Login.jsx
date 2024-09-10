@@ -1,7 +1,7 @@
 import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
 import { Label } from "../components/ui/label";
-import { getFormData } from "../lib/utils";
+import { getFormData } from "../lib/my-utils/index";
 import { login } from "../request";
 import { UpdateIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
