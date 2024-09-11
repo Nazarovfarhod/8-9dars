@@ -92,7 +92,7 @@ export default function Home() {
           </TableBody>
         </Table>
         {loading && (
-          <div className="mt-10 flex w-full items-center justify-center gap-3 font-bold">
+          <div className="mt-96 flex w-full items-center justify-center gap-3 font-bold">
             <UpdateIcon className="animate-spin" />
             <h3>Yuklanmoqda...</h3>
           </div>
