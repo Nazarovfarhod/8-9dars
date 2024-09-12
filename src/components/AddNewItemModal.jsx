@@ -6,11 +6,14 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { getFormData } from "../lib/my-utils/index";
 import { useAppStore } from "../lib/zustand";
 import SelectCategory from "./SelectCategory";
 import SelectColor from "./SelectColor";
 import { SelectCountry } from "./SelectCountry";
+import LifeTime from "./LifeTime";
+import UploadImage from "./UploadImage";
 
 export default function AddNewItemModal() {
   const handleSubmit = (e) => {
@@ -44,12 +47,37 @@ export default function AddNewItemModal() {
                 name="price"
               />
             </div>
-            <div className="flex items-center justify-between mb-3">
+            <div className="mb-3 flex items-center justify-between">
               <SelectCategory />
               <SelectColor />
             </div>
-            <div>
+            <div className="mb-3">
               <SelectCountry />
+            </div>
+            <div>
+              <Label className="ml-2" htmlFor="summary">
+                Gul haqida ma'lumot*
+              </Label>
+              <Textarea
+                placeholder="Gul haqida ma'lumot kiriting..."
+                id="summary"
+              />
+            </div>
+            <div className="mb-3">
+              <Label className="ml-2" htmlFor="smell">
+                Hid*
+              </Label>
+              <Input
+                type="text"
+                id="smell"
+                placeholder="Gul hidini kiriting..."
+              />
+            </div>
+            <div>
+              <LifeTime />
+            </div>
+            <div className="w-full">
+              <UploadImage />
             </div>
           </form>
         </DialogHeader>

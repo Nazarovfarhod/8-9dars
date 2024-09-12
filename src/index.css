@@ -92,4 +92,14 @@
   .h4 {
     @apply text-xl font-semibold tracking-tight;
   }
+
+  .spinFlowerIcon {
+    animation: spin 5s linear infinite;
+  }
+
+  @keyframes spin {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 }
