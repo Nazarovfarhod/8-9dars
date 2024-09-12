@@ -30,7 +30,11 @@ export default function SelectCategory() {
           </SelectTrigger>
           <SelectContent className="max-h-[170px] overflow-y-scroll">
             {collectItem(flowers, "category").map((value) => {
-              return <SelectItem value={value}>{value}</SelectItem>;
+              return (
+                <SelectItem key={value} value={value}>
+                  {value}
+                </SelectItem>
+              );
             })}
           </SelectContent>
         </Select>

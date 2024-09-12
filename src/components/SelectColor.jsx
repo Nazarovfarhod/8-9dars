@@ -46,7 +46,7 @@ export default function SelectColor() {
           <SelectContent className="max-h-[170px] overflow-y-scroll">
             {collectItem(flowers, "color").map((value) => {
               return (
-                <SelectItem value={value}>
+                <SelectItem key={value} value={value}>
                   <div className="flex items-center gap-2">
                     <span
                       style={{ backgroundColor: value }}

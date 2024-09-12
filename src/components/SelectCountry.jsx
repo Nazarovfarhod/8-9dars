@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
+import { useAppStore } from "../lib/zustand";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -43,6 +44,9 @@ const frameworks = [
 ];
 
 export function SelectCountry() {
+  const flowers = useAppStore((state) => state.flowers);
+  console.log(flowers);
+
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
 
