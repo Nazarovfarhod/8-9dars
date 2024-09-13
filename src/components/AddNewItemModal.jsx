@@ -26,7 +26,7 @@ export default function AddNewItemModal() {
 
   return (
     <Dialog open={addItemModal} onOpenChange={setAddItemModal}>
-      <DialogContent>
+      <DialogContent className="max-h-[650px] overflow-x-hidden overflow-y-scroll">
         <DialogHeader>
           <DialogTitle>Ma'lumot qo'shish</DialogTitle>
 
