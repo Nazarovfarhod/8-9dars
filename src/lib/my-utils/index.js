@@ -17,3 +17,5 @@ export const collectItem = (array, item) => {
 export const BASE_URL = "https://json-api.uz/api/project/gullar";
 
 export const periods = ["kun", "oy", "yil"];
+
+export const allowImageSize = 5_242_880;
