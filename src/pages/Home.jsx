@@ -47,8 +47,8 @@ export default function Home() {
 
   return (
     <>
-      <div className="base-container">
-        <div className="mb-5 flex items-center justify-between border-b py-5">
+      <div className="base-container mb-5">
+        <div className="mb-5 flex items-center justify-between py-5">
           <h2 className="h2">Boshqaruv paneli</h2>
           <Button disabled={!flowers} onClick={setAddItemModal}>
             Qo'shish
