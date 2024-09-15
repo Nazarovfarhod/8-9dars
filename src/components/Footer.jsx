@@ -8,7 +8,7 @@ export default function Footer() {
           <a className="font-medium" href="https://json-api.uz/">
             JSON API
           </a>{" "}
-          bilan qurilgan App
+          yordamida qurilgan App
         </div>
       </div>
     </div>
