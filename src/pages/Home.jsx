@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAppStore } from "../lib/zustand";
-import { limit } from "../lib/my-utils";
+import { collectItem, limit } from "../lib/my-utils";
 import { getFlowers, refreshToken } from "../request";
 import { toast } from "sonner";
 import {
@@ -16,8 +16,10 @@ import { PlusIcon, UpdateIcon } from "@radix-ui/react-icons";
 import { Button } from "../components/ui/button";
 import AddNewItemModal from "../components/AddNewItemModal";
 import { MyPagination } from "../components/MyPagination";
+import Filters from "../components/Filters";
 
 export default function Home() {
+  const [category, setCategory] = useState("");
   const [skip, setSkip] = useState(0);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -29,7 +31,7 @@ export default function Home() {
 
   useEffect(() => {
     setLoading(true);
-    getFlowers(admin?.access_token, { skip, limit })
+    getFlowers(admin?.access_token, { skip, limit, category })
       .then(({ data, total }) => {
         setTotal(total);
         setFlowers(data);
@@ -47,7 +49,7 @@ export default function Home() {
         }
       })
       .finally(() => setLoading(false));
-  }, [admin, skip]);
+  }, [admin, skip, category]);
 
   return (
     <>
@@ -58,6 +60,14 @@ export default function Home() {
             Qo'shish
             <PlusIcon className="ml-2" />
           </Button>
+        </div>
+        <div>
+          {flowers && (
+            <Filters
+              categories={collectItem(flowers, "category")}
+              setCategory={setCategory}
+            />
+          )}
         </div>
         <div>
           <Table>

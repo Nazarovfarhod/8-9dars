@@ -38,8 +38,14 @@ export const login = async (data) => {
   }
 };
 
-export const getFlowers = async (token, { skip, limit }) => {
-  const res = await fetch(BASE_URL + `/gullar/?skip=${skip}&limit=${limit}`, {
+export const getFlowers = async (token, { skip, limit, category }) => {
+  const search = new URLSearchParams(`skip=${skip}&limit=${limit}`);
+
+  if (category) {
+    search.append("category", category);
+  }
+
+  const res = await fetch(BASE_URL + "/gullar?" + search, {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
