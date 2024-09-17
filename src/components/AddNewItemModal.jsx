@@ -17,20 +17,55 @@ import LifeTime from "./LifeTime";
 import UploadImage from "./UploadImage";
 import { toast } from "sonner";
 import Summaries from "./Summaries";
+import { refreshToken, sendFlower } from "../request";
+import { useEffect, useState } from "react";
+import { UpdateIcon } from "@radix-ui/react-icons";
 
-export default function AddNewItemModal() {
+export default function AddNewItemModal({ sendingData, setSendingData }) {
+  const [loading, setLoading] = useState(false);
+  const admin = useAppStore((state) => state.admin);
+  const setAdmin = useAppStore((state) => state.setAdmin);
+  const addItemModal = useAppStore((state) => state.addItemModal);
+  const setAddItemModal = useAppStore((state) => state.setAddItemModal);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const result = getFormData(e.target);
-    console.log(result);
     const { checker, errorMessage } = validation(result);
     if (checker) {
       toast.warning(errorMessage);
+    } else {
+      setSendingData(result);
+      console.log(result);
     }
   };
 
-  const addItemModal = useAppStore((state) => state.addItemModal);
-  const setAddItemModal = useAppStore((state) => state.setAddItemModal);
+  useEffect(() => {
+    if (sendingData) {
+      setLoading(true);
+      sendFlower(admin?.access_token, sendingData)
+        .then((res) => {
+          toast.dismiss();
+          toast.success(res);
+          setSendingData(null);
+          setAddItemModal();
+        })
+        .catch(({ message }) => {
+          if (message === "403") {
+            refreshToken(admin?.refresh_token)
+              .then(({ access_token }) => {
+                setAdmin({ ...admin, access_token });
+              })
+              .catch(() => {
+                toast.info("Tizimga qayta kiring");
+                setAdmin(null);
+              });
+          }
+          toast.error(message);
+        })
+        .finally(() => setLoading(false));
+    }
+  }, [sendingData, admin]);
 
   return (
     <Dialog open={addItemModal} onOpenChange={setAddItemModal}>
@@ -97,7 +132,9 @@ export default function AddNewItemModal() {
               <Button onClick={setAddItemModal} variant="outline" type="button">
                 Bekor qilish
               </Button>
-              <Button type="submit">Qo'shish</Button>
+              <Button type="submit" disabled={loading}>
+                {loading ? <UpdateIcon className="animate-spin" /> : "Qo'shish"}
+              </Button>
             </div>
           </form>
         </DialogHeader>

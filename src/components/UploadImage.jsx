@@ -94,6 +94,7 @@ export default function UploadImage() {
         <TabsContent value="default">
           <Button
             className="w-full"
+            type="button"
             onClick={() =>
               setValue(
                 "https://cdn-icons-png.flaticon.com/128/10085/10085271.png",

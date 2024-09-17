@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
-
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,9 +17,34 @@ import {
 } from "@/components/ui/popover";
 import { Label } from "@/components/ui/label";
 
-export default function FiltersByCountry({ countries }) {
+export default function FiltersByCountry({ countries, handleEnableToFilter }) {
+  const button = React.useRef(null);
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
+  React.useEffect(() => {
+    let id = null;
+    const changer = () => {
+      if (open && button) {
+        id = setTimeout(() => {
+          const element = document.querySelector(
+            "[data-radix-popper-contents-wrapper]",
+          );
+          const listbox = element.querySelector("[role='listbox']");
+          listbox.style.maxHeight = "173px";
+          element.style.width = button.current.offsetWidth + "px";
+        }, 1);
+      }
+    };
+
+    changer();
+
+    window.addEventListener("resize", changer);
+    return () => {
+      clearTimeout(id);
+      window.removeEventListener("resize", changer);
+      id = null;
+    };
+  }, [open, button]);
 
   return (
     countries && (
@@ -33,11 +57,18 @@ export default function FiltersByCountry({ countries }) {
           name="country"
         />
         <Label className="ml-2" onClick={() => setOpen(!open)}>
-          Hudud*
+          Hudud bo'yicha
         </Label>
-        <Popover className="w-full" open={open} onOpenChange={setOpen}>
+
+        <Popover
+          className="w-full"
+          open={open}
+          onValueChange={handleEnableToFilter}
+          onOpenChange={setOpen}
+        >
           <PopoverTrigger asChild>
             <Button
+              ref={button}
               variant="outline"
               role="combobox"
               aria-expanded={open}
@@ -49,14 +80,15 @@ export default function FiltersByCountry({ countries }) {
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="p-0">
-            <Command>
+          <PopoverContent className="w-full p-0">
+            <Command className="w-full">
               <CommandInput placeholder="Hududni qidirish..." />
               <CommandList>
                 <CommandEmpty>Bunday hudud topilmadi.</CommandEmpty>
-                <CommandGroup>
+                <CommandGroup className="w-full">
                   {countries.map((country) => (
                     <CommandItem
+                      className="w-full"
                       key={country}
                       value={country}
                       onSelect={(currentValue) => {

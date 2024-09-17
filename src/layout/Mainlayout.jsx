@@ -5,11 +5,15 @@ import Footer from "../components/Footer";
 export default function Mainlayout() {
   return (
     <>
-      <Header />
+      <header className="sticky top-0 z-10 bg-slate-100">
+        <Header />
+      </header>
       <main>
         <Outlet />
       </main>
-      <Footer />
+      <div className="sticky bottom-0 z-10 bg-slate-100">
+        <Footer />
+      </div>
     </>
   );
 }

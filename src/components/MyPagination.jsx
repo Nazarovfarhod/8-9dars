@@ -10,7 +10,6 @@ import {
 import { limit } from "../lib/my-utils";
 
 export function MyPagination({ setSkip, total, pageCount, skip }) {
-
   return (
     <Pagination>
       <PaginationContent>
@@ -54,7 +53,7 @@ export function MyPagination({ setSkip, total, pageCount, skip }) {
                 if (prev + limit > total) {
                   return prev;
                 } else {
-                  return limit;
+                  return prev + limit;
                 }
               });
             }}
