@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAppStore } from "../lib/zustand";
-import { collectItem, limit } from "../lib/my-utils";
+import { collectItem, getFormData, limit } from "../lib/my-utils";
 import { getFlowers, refreshToken } from "../request";
 import { toast } from "sonner";
 import {
@@ -12,11 +12,17 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { PlusIcon, UpdateIcon } from "@radix-ui/react-icons";
+import {
+  PlusIcon,
+  SymbolIcon,
+  UpdateIcon,
+  GridIcon,
+} from "@radix-ui/react-icons";
 import { Button } from "../components/ui/button";
 import AddNewItemModal from "../components/AddNewItemModal";
 import { MyPagination } from "../components/MyPagination";
-import Filters from "../components/Filters";
+import FiltersByCategory from "../components/FiltersByCategory";
+import FiltersByCountry from "../components/FiltersByCountry";
 
 export default function Home() {
   const [category, setCategory] = useState("");
@@ -28,6 +34,16 @@ export default function Home() {
   const admin = useAppStore((state) => state.admin);
   const setAdmin = useAppStore((state) => state.setAdmin);
   const setAddItemModal = useAppStore((state) => state.setAddItemModal);
+
+  const reset = () => {
+    setCategory("");
+  };
+
+  const handleFilter = (e) => {
+    e.preventDefault();
+    const result = getFormData(e.target);
+    console.log(result);
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -61,14 +77,22 @@ export default function Home() {
             <PlusIcon className="ml-2" />
           </Button>
         </div>
-        <div>
-          {flowers && (
-            <Filters
-              categories={collectItem(flowers, "category")}
-              setCategory={setCategory}
-            />
-          )}
-        </div>
+        {flowers && (
+          <form onSubmit={handleFilter}>
+            <FiltersByCategory categories={collectItem(flowers, "category")} />
+            <FiltersByCountry countries={collectItem(flowers, "country")} />
+            {/* <FiltersByColor colors={collectItem(flowers, "color")} /> */}
+
+            <div className="flex gap-2">
+              <Button variant={"outline"} onClick={reset} type="reset">
+                Tozalash <SymbolIcon className="ml-2" />
+              </Button>
+              <Button type="submit">
+                Saralash <GridIcon className="ml-2" />
+              </Button>
+            </div>
+          </form>
+        )}
         <div>
           <Table>
             {flowers && (
@@ -100,7 +124,7 @@ export default function Home() {
                         className="block h-4 w-4 rounded-full border"
                       ></span>
                     </TableCell>
-                    <TableCell className="text-right">$ {price}</TableCell>
+                    <TableCell className="text-right">{price} so'm</TableCell>
                   </TableRow>
                 );
               })}

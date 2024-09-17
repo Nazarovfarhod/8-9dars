@@ -9,7 +9,7 @@ export default function Header() {
   return (
     <div className="border-b py-5">
       <div className="base-container flex justify-between">
-        <h2 className="text-3xl font-bold">Gullar App</h2>
+        <h2 className="text-3xl font-bold">Gullar Market</h2>
         <div className="flex items-center gap-1">
           <ModeToggle />
           <Button

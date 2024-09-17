@@ -9,12 +9,12 @@ import {
   SelectLabel,
 } from "@/components/ui/select";
 
-export default function Filters({ categories, setCategory }) {
+export default function FiltersByCategory({ categories, setCategory }) {
   return (
     <div className="mb-5">
       <div className="">
         <Label>Turkumlash</Label>
-        <Select onValueChange={(value) => setCategory(value)}>
+        <Select name="category" onValueChange={(value) => setCategory(value)}>
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Turkum bo'yicha" />
           </SelectTrigger>
