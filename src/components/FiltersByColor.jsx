@@ -19,7 +19,7 @@ export default function FiltersByColor({ colors, handleEnableToFilter }) {
   };
 
   return (
-    <div className="mb-5">
+    <div className="mb-2 w-full">
       <div className="">
         <Label className="mb-3" onClick={handleFocus}>
           Rang
@@ -33,7 +33,7 @@ export default function FiltersByColor({ colors, handleEnableToFilter }) {
             handleEnableToFilter();
           }}
         >
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-full">
             <SelectValue placeholder="Rang bo'yicha">
               <div className="flex items-center gap-2">
                 <span

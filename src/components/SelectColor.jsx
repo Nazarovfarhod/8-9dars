@@ -10,10 +10,10 @@ import {
 } from "@/components/ui/select";
 import { useState } from "react";
 
-export default function SelectColor() {
+export default function SelectColor({ outsideColor }) {
   const flowers = useAppStore((state) => state.flowers);
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(outsideColor ? outsideColor : "");
 
   const handleFocus = () => {
     setOpen(!open);
@@ -27,6 +27,7 @@ export default function SelectColor() {
         </Label>
         <Select
           name="color"
+          defaultValue={outsideColor && outsideColor}
           onValueChange={setValue}
           open={open}
           onOpenChange={setOpen}

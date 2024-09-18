@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAppStore } from "../lib/zustand";
-import { collectItem, getFormData, limit } from "../lib/my-utils";
+import { collectItem, findObj, getFormData, limit } from "../lib/my-utils";
 import { deleteFlower, getFlowers, refreshToken } from "../request";
 import { toast } from "sonner";
 import {
@@ -33,8 +33,13 @@ import { MyPagination } from "../components/MyPagination";
 import FiltersByCategory from "../components/FiltersByCategory";
 import FiltersByCountry from "../components/FiltersByCountry";
 import FiltersByColor from "../components/FiltersByColor";
+import EditFlower from "../components/EditFlower";
 
 export default function Home() {
+  const [editing, setEditing] = useState(null);
+  const [editedData, setEditedData] = useState(null);
+  const [deletedData, setDeletedData] = useState(null);
+  const [deletedLoadin, setDeletedLoading] = useState(false);
   const [sendingData, setSendingData] = useState(null);
   const [enableToFilter, setEnableToFilter] = useState(true);
   const [isFiltered, setIsFiltered] = useState(null);
@@ -46,6 +51,7 @@ export default function Home() {
   const admin = useAppStore((state) => state.admin);
   const setAdmin = useAppStore((state) => state.setAdmin);
   const setAddItemModal = useAppStore((state) => state.setAddItemModal);
+  const setEditModal = useAppStore((state) => state.setEditModal);
 
   const reset = () => {
     setIsFiltered(null);
@@ -61,7 +67,7 @@ export default function Home() {
     const result = getFormData(e.target);
     setIsFiltered(result);
   };
-
+  //Get
   useEffect(() => {
     setLoading(true);
     getFlowers(admin?.access_token, { skip, limit }, isFiltered)
@@ -82,40 +88,80 @@ export default function Home() {
         }
       })
       .finally(() => setLoading(false));
-  }, [admin, skip, isFiltered, sendingData]);
+  }, [admin, skip, isFiltered, sendingData, deletedData, editing]);
+
+  const handleEdit = (id) => {
+    setEditModal();
+    // console.log(id, flowers);
+    const result = findObj(flowers, id);
+    setEditedData(result);
+    // console.log(result);
+  };
 
   const handleDelete = (id) => {
-    deleteFlower(admin?.access_token, id)
-      .then(() => {})
-      .catch(() => {});
+    console.log(id);
+
+    setDeletedData(id);
   };
+  //Delete
+  useEffect(() => {
+    if (deletedData) {
+      console.log(deletedData);
+
+      setDeletedLoading(true);
+      deleteFlower(admin?.access_token, deletedData)
+        .then((res) => {
+          toast.dismiss();
+          toast.success(res);
+          setDeletedData(null);
+        })
+        .catch(({ message }) => {
+          if (message === "403") {
+            refreshToken(admin?.refresh_token)
+              .then(({ access_token }) => {
+                setAdmin({ ...admin, access_token });
+              })
+              .catch(() => {
+                toast.info("Tizimga qayta kiring");
+                setAdmin(null);
+              });
+          }
+          toast.error(message);
+        })
+        .finally(() => setDeletedLoading(false));
+    }
+  }, [deletedData, admin]);
 
   return (
     <>
-      <div className="base-container mb-5">
-        <div className="mb-5 flex items-center justify-between py-5">
+      <div className="w-full border-b mb-5">
+        <div className="base-container flex items-center justify-between py-5">
           <h2 className="h2">Boshqaruv paneli</h2>
           <Button disabled={!flowers} onClick={setAddItemModal}>
             Qo'shish
             <PlusIcon className="ml-2" />
           </Button>
         </div>
+      </div>
+      <div className="base-container mb-5">
         {flowers && (
           <form onSubmit={handleFilter}>
-            <FiltersByCategory
-              categories={collectItem(flowers, "category")}
-              handleEnableToFilter={handleEnableToFilter}
-            />
-            <FiltersByCountry
-              countries={collectItem(flowers, "country")}
-              handleEnableToFilter={handleEnableToFilter}
-            />
-            <FiltersByColor
-              colors={collectItem(flowers, "color")}
-              handleEnableToFilter={handleEnableToFilter}
-            />
+            <div className="mb-5 flex w-full items-center gap-5">
+              <FiltersByCategory
+                categories={collectItem(flowers, "category")}
+                handleEnableToFilter={handleEnableToFilter}
+              />
+              <FiltersByCountry
+                countries={collectItem(flowers, "country")}
+                handleEnableToFilter={handleEnableToFilter}
+              />
+              <FiltersByColor
+                colors={collectItem(flowers, "color")}
+                handleEnableToFilter={handleEnableToFilter}
+              />
+            </div>
 
-            <div className="flex gap-2">
+            <div className="mb-10 flex items-center justify-end gap-2">
               <Button
                 variant={"outline"}
                 onClick={reset}
@@ -166,7 +212,7 @@ export default function Home() {
                     <TableCell className="flex items-center justify-end gap-2 text-right">
                       <TooltipProvider delayDuration="0">
                         <Tooltip>
-                          <TooltipTrigger>
+                          <TooltipTrigger onClick={() => handleEdit(id)}>
                             <span
                               type="button"
                               className={`${buttonVariants({ variant: "secondary", size: "icon" })}`}
@@ -182,12 +228,25 @@ export default function Home() {
 
                       <TooltipProvider delayDuration="0">
                         <Tooltip>
-                          <TooltipTrigger onClick={() => handleDelete(id)}>
+                          <TooltipTrigger
+                            className={
+                              deletedData && deletedData === id && deletedLoadin
+                                ? "pointer-events-none opacity-50"
+                                : ""
+                            }
+                            onClick={() => handleDelete(id)}
+                          >
                             <span
                               type="button"
                               className={`${buttonVariants({ variant: "destructive", size: "icon" })}`}
                             >
-                              <TrashIcon />
+                              {deletedData &&
+                              deletedData === id &&
+                              deletedData ? (
+                                <UpdateIcon className="animate-spin" />
+                              ) : (
+                                <TrashIcon />
+                              )}
                             </span>
                           </TooltipTrigger>
                           <TooltipContent>
@@ -223,6 +282,13 @@ export default function Home() {
         sendingData={sendingData}
         setSendingData={setSendingData}
       />
+      {editedData && (
+        <EditFlower
+          editedData={editedData}
+          setEditing={setEditing}
+          editing={editing}
+        />
+      )}
     </>
   );
 }

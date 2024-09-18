@@ -29,6 +29,8 @@ export default function FiltersByCountry({ countries, handleEnableToFilter }) {
           const element = document.querySelector(
             "[data-radix-popper-contents-wrapper]",
           );
+          console.log(element);
+
           const listbox = element.querySelector("[role='listbox']");
           listbox.style.maxHeight = "173px";
           element.style.width = button.current.offsetWidth + "px";
@@ -83,7 +85,7 @@ export default function FiltersByCountry({ countries, handleEnableToFilter }) {
           <PopoverContent className="w-full p-0">
             <Command className="w-full">
               <CommandInput placeholder="Hududni qidirish..." />
-              <CommandList>
+              <CommandList className="w-full">
                 <CommandEmpty>Bunday hudud topilmadi.</CommandEmpty>
                 <CommandGroup className="w-full">
                   {countries.map((country) => (

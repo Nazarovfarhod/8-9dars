@@ -22,12 +22,14 @@ import {
 import { collectItem } from "../lib/my-utils";
 import { Label } from "@/components/ui/label";
 
-export function SelectCountry() {
+export function SelectCountry({ outsideCountry }) {
   const flowers = useAppStore((state) => state.flowers);
   const country = flowers && collectItem(flowers, "country");
   const button = React.useRef(null);
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
+  const [value, setValue] = React.useState(
+    outsideCountry ? outsideCountry : "",
+  );
 
   React.useEffect(() => {
     let id = null;
@@ -37,6 +39,8 @@ export function SelectCountry() {
           const element = document.querySelector(
             "[data-radix-popper-contents-wrapper]",
           );
+          console.log(element);
+
           const listbox = element.querySelector("[role='listbox']");
           listbox.style.maxHeight = "173px";
           element.style.width = button.current.offsetWidth + "px";
@@ -48,7 +52,7 @@ export function SelectCountry() {
 
     window.addEventListener("resize", changer);
     return () => {
-      clearTimeout(id);
+      clearTimeout(id && id);
       window.removeEventListener("resize", changer);
       id = null;
     };
@@ -88,25 +92,27 @@ export function SelectCountry() {
               <CommandList>
                 <CommandEmpty>Bunday hudud topilmadi.</CommandEmpty>
                 <CommandGroup className="w-full">
-                  {country.map((country) => (
-                    <CommandItem
-                      className="w-full"
-                      key={country}
-                      value={country}
-                      onSelect={(currentValue) => {
-                        setValue(currentValue === value ? "" : currentValue);
-                        setOpen(false);
-                      }}
-                    >
-                      <Check
-                        className={cn(
-                          "mr-2 h-4 w-4",
-                          value === country ? "opacity-100" : "opacity-0",
-                        )}
-                      />
-                      {country}
-                    </CommandItem>
-                  ))}
+                  {country.map((country, index) => {
+                    return (
+                      <CommandItem
+                        className="w-full"
+                        key={country}
+                        value={country}
+                        onSelect={(currentValue) => {
+                          setValue(currentValue === value ? "" : currentValue);
+                          setOpen(false);
+                        }}
+                      >
+                        <Check
+                          className={cn(
+                            "mr-2 h-4 w-4",
+                            value === country ? "opacity-100" : "opacity-0",
+                          )}
+                        />
+                        {country}
+                      </CommandItem>
+                    );
+                  })}
                 </CommandGroup>
               </CommandList>
             </Command>

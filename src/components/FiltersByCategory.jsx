@@ -21,7 +21,7 @@ export default function FiltersByCategory({
   };
 
   return (
-    <div className="mb-5">
+    <div className="mb-2 w-full">
       <div className="">
         <Label onClick={handleFocus}>Turkumlash</Label>
         <Select
@@ -30,7 +30,7 @@ export default function FiltersByCategory({
           onOpenChange={handleFocus}
           name="category"
         >
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-full">
             <SelectValue placeholder="Turkum bo'yicha" />
           </SelectTrigger>
           <SelectContent>

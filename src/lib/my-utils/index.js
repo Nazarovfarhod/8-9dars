@@ -39,6 +39,10 @@ export const validation = (obj) => {
   return { checker, errorMessage };
 };
 
+export const findObj = (array, id) => {
+  return array.find((element) => element.id === id);
+};
+
 export const BASE_URL = "https://json-api.uz/api/project/gullar";
 export const allowImageSize = 5_242_880;
 export const summaryLimit = 200;

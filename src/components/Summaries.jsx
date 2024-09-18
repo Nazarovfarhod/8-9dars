@@ -3,7 +3,7 @@ import { Label } from "@/components/ui/label";
 import { summaryLimit } from "../lib/my-utils";
 import { useState } from "react";
 
-export default function Summaries() {
+export default function Summaries({ text }) {
   const [counter, setCounter] = useState(0);
 
   const writer = (e) => {
@@ -19,6 +19,7 @@ export default function Summaries() {
       <Textarea
         maxLength="200"
         onChange={writer}
+        defaultValue={text && text}
         name="summary"
         placeholder="Gul haqida ma'lumot kiriting..."
         id="summary"

@@ -9,8 +9,8 @@ import { uploadImage } from "../request";
 import { toast } from "sonner";
 import { allowImageSize } from "../lib/my-utils";
 
-export default function UploadImage() {
-  const [value, setValue] = useState("");
+export default function UploadImage({ outsideImg }) {
+  const [value, setValue] = useState(outsideImg ? outsideImg : "");
   const urlInput = useRef(null);
 
   const handleUploadImage = (image, type = "local") => {
@@ -108,8 +108,16 @@ export default function UploadImage() {
       {value && (
         <img
           onLoad={() => {
-            toast.success("Rasm muvaffaqiyatli yuklandi");
             toast.dismiss();
+            toast.success("Rasm muvaffaqiyatli yuklandi");
+          }}
+          onError={() => {
+            toast.warning(
+              "Rasimni yuklash imkoni bo'lmadi, qayta urinib ko'rin!",
+            );
+            setValue(
+              "https://cdn-icons-png.flaticon.com/128/10085/10085271.png",
+            );
           }}
           className="!h-52 !w-full rounded-xl bg-top object-cover"
           src={value}
