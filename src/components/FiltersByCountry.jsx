@@ -30,9 +30,6 @@ export default function FiltersByCountry({ countries, handleEnableToFilter }) {
             "[data-radix-popper-contents-wrapper]",
           );
           console.log(element);
-
-          const listbox = element.querySelector("[role='listbox']");
-          listbox.style.maxHeight = "173px";
           element.style.width = button.current.offsetWidth + "px";
         }, 1);
       }
@@ -87,7 +84,7 @@ export default function FiltersByCountry({ countries, handleEnableToFilter }) {
               <CommandInput placeholder="Hududni qidirish..." />
               <CommandList className="w-full">
                 <CommandEmpty>Bunday hudud topilmadi.</CommandEmpty>
-                <CommandGroup className="w-full">
+                <CommandGroup className="max-h-[105px] w-full">
                   {countries.map((country) => (
                     <CommandItem
                       className="w-full"

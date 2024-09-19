@@ -21,7 +21,7 @@ export default function FiltersByCategory({
   };
 
   return (
-    <div className="mb-2 w-full">
+    <div className="w-full">
       <div className="">
         <Label onClick={handleFocus}>Turkumlash</Label>
         <Select
@@ -34,7 +34,7 @@ export default function FiltersByCategory({
             <SelectValue placeholder="Turkum bo'yicha" />
           </SelectTrigger>
           <SelectContent>
-            <SelectGroup>
+            <SelectGroup className="max-h-32">
               <SelectLabel>Turkumlar</SelectLabel>
               {categories.map((category) => {
                 return (

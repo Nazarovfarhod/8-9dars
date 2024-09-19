@@ -19,7 +19,7 @@ export default function FiltersByColor({ colors, handleEnableToFilter }) {
   };
 
   return (
-    <div className="mb-2 w-full">
+    <div className="w-full">
       <div className="">
         <Label className="mb-3" onClick={handleFocus}>
           Rang
@@ -45,7 +45,7 @@ export default function FiltersByColor({ colors, handleEnableToFilter }) {
             </SelectValue>
           </SelectTrigger>
           <SelectContent>
-            <SelectGroup>
+            <SelectGroup className="max-h-32">
               <SelectLabel>Ranglar</SelectLabel>
               {colors?.map((color) => {
                 return (

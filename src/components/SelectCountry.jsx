@@ -39,10 +39,6 @@ export function SelectCountry({ outsideCountry }) {
           const element = document.querySelector(
             "[data-radix-popper-contents-wrapper]",
           );
-          console.log(element);
-
-          const listbox = element.querySelector("[role='listbox']");
-          listbox.style.maxHeight = "173px";
           element.style.width = button.current.offsetWidth + "px";
         }, 1);
       }
@@ -91,7 +87,7 @@ export function SelectCountry({ outsideCountry }) {
               <CommandInput placeholder="Hududni qidirish..." />
               <CommandList>
                 <CommandEmpty>Bunday hudud topilmadi.</CommandEmpty>
-                <CommandGroup className="w-full">
+                <CommandGroup className="max-h-[105px] w-full">
                   {country.map((country, index) => {
                     return (
                       <CommandItem

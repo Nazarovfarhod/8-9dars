@@ -134,7 +134,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="w-full border-b mb-5">
+      <div className="mb-5 w-full border-b">
         <div className="base-container flex items-center justify-between py-5">
           <h2 className="h2">Boshqaruv paneli</h2>
           <Button disabled={!flowers} onClick={setAddItemModal}>
@@ -146,17 +146,17 @@ export default function Home() {
       <div className="base-container mb-5">
         {flowers && (
           <form onSubmit={handleFilter}>
-            <div className="mb-5 flex w-full items-center gap-5">
+            <div className="mb-5 flex w-full items-end gap-5">
+              <FiltersByColor
+                colors={collectItem(flowers, "color")}
+                handleEnableToFilter={handleEnableToFilter}
+              />
               <FiltersByCategory
                 categories={collectItem(flowers, "category")}
                 handleEnableToFilter={handleEnableToFilter}
               />
               <FiltersByCountry
                 countries={collectItem(flowers, "country")}
-                handleEnableToFilter={handleEnableToFilter}
-              />
-              <FiltersByColor
-                colors={collectItem(flowers, "color")}
                 handleEnableToFilter={handleEnableToFilter}
               />
             </div>
@@ -180,7 +180,9 @@ export default function Home() {
           <Table>
             {flowers && (
               <TableCaption className="mb-5">
-                Gullar haqida ma'lumot.
+                {flowers.length === 0
+                  ? "Ma'lumot mavjud emas"
+                  : " Gullar haqida ma'lumot."}
               </TableCaption>
             )}
             <TableHeader>
@@ -205,7 +207,7 @@ export default function Home() {
                       {" "}
                       <span
                         style={{ backgroundColor: color }}
-                        className="block h-4 w-4 rounded-full border"
+                        className="block h-5 w-5 rounded-full border"
                       ></span>
                     </TableCell>
                     <TableCell className="text-right">{price} so'm</TableCell>
