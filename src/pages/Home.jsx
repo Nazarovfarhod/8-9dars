@@ -100,8 +100,9 @@ export default function Home() {
 
   const handleDelete = (id) => {
     console.log(id);
+    const checker = confirm("Gulni ro'yhattan o'chirmoqchimisiz?");
 
-    setDeletedData(id);
+    checker && setDeletedData(id);
   };
   //Delete
   useEffect(() => {
@@ -133,151 +134,155 @@ export default function Home() {
   }, [deletedData, admin]);
 
   return (
-    <>
-      <div className="mb-5 w-full border-b">
-        <div className="base-container flex items-center justify-between py-5">
-          <h2 className="h2">Boshqaruv paneli</h2>
-          <Button disabled={!flowers} onClick={setAddItemModal}>
-            Qo'shish
-            <PlusIcon className="ml-2" />
-          </Button>
+    <div className="flex h-full w-full">
+      <div className="w-full">
+        <div className="mb-5">
+          <div className="flex w-full items-center justify-between border-b py-5">
+            <h2 className="h2">Boshqaruv paneli</h2>
+            <Button disabled={!flowers} onClick={setAddItemModal}>
+              Qo'shish
+              <PlusIcon className="ml-2" />
+            </Button>
+          </div>
         </div>
-      </div>
-      <div className="base-container mb-5">
-        {flowers && (
-          <form onSubmit={handleFilter}>
-            <div className="mb-5 flex w-full items-end gap-5">
-              <FiltersByColor
-                colors={collectItem(flowers, "color")}
-                handleEnableToFilter={handleEnableToFilter}
-              />
-              <FiltersByCategory
-                categories={collectItem(flowers, "category")}
-                handleEnableToFilter={handleEnableToFilter}
-              />
-              <FiltersByCountry
-                countries={collectItem(flowers, "country")}
-                handleEnableToFilter={handleEnableToFilter}
-              />
-            </div>
-
-            <div className="mb-10 flex items-center justify-end gap-2">
-              <Button
-                variant={"outline"}
-                onClick={reset}
-                type="reset"
-                disabled={enableToFilter}
-              >
-                Tozalash <SymbolIcon className="ml-2" />
-              </Button>
-              <Button type="submit" disabled={enableToFilter}>
-                Saralash <GridIcon className="ml-2" />
-              </Button>
-            </div>
-          </form>
-        )}
-        <div>
-          <Table>
-            {flowers && (
-              <TableCaption className="mb-5">
-                {flowers.length === 0
-                  ? "Ma'lumot mavjud emas"
-                  : " Gullar haqida ma'lumot."}
-              </TableCaption>
-            )}
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[100px]">Id</TableHead>
-                <TableHead>Gul Nomi</TableHead>
-                <TableHead>Turkumi</TableHead>
-                <TableHead>Rangi</TableHead>
-                <TableHead className="text-right">Narxi</TableHead>
-                <TableHead className="text-right">Harakatlar</TableHead>
-              </TableRow>
-            </TableHeader>
-
-            <TableBody>
-              {flowers?.map(({ name, id, category, color, price }) => {
-                return (
-                  <TableRow key={id}>
-                    <TableCell className="font-medium">{id}</TableCell>
-                    <TableCell>{name}</TableCell>
-                    <TableCell>{category}</TableCell>
-                    <TableCell>
-                      {" "}
-                      <span
-                        style={{ backgroundColor: color }}
-                        className="block h-5 w-5 rounded-full border"
-                      ></span>
-                    </TableCell>
-                    <TableCell className="text-right">{price} so'm</TableCell>
-                    <TableCell className="flex items-center justify-end gap-2 text-right">
-                      <TooltipProvider delayDuration="0">
-                        <Tooltip>
-                          <TooltipTrigger onClick={() => handleEdit(id)}>
-                            <span
-                              type="button"
-                              className={`${buttonVariants({ variant: "secondary", size: "icon" })}`}
-                            >
-                              <Pencil1Icon />
-                            </span>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p>Tahrirlash</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
-
-                      <TooltipProvider delayDuration="0">
-                        <Tooltip>
-                          <TooltipTrigger
-                            className={
-                              deletedData && deletedData === id && deletedLoadin
-                                ? "pointer-events-none opacity-50"
-                                : ""
-                            }
-                            onClick={() => handleDelete(id)}
-                          >
-                            <span
-                              type="button"
-                              className={`${buttonVariants({ variant: "destructive", size: "icon" })}`}
-                            >
-                              {deletedData &&
-                              deletedData === id &&
-                              deletedData ? (
-                                <UpdateIcon className="animate-spin" />
-                              ) : (
-                                <TrashIcon />
-                              )}
-                            </span>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p>O'chirish</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
+        <div className="mb-5">
           {flowers && (
-            <MyPagination
-              setSkip={setSkip}
-              total={total}
-              skip={skip}
-              pageCount={Math.ceil(total / limit)}
-            />
+            <form onSubmit={handleFilter}>
+              <div className="mb-5 flex w-full items-end gap-5">
+                <FiltersByColor
+                  colors={collectItem(flowers, "color")}
+                  handleEnableToFilter={handleEnableToFilter}
+                />
+                <FiltersByCategory
+                  categories={collectItem(flowers, "category")}
+                  handleEnableToFilter={handleEnableToFilter}
+                />
+                <FiltersByCountry
+                  countries={collectItem(flowers, "country")}
+                  handleEnableToFilter={handleEnableToFilter}
+                />
+              </div>
+
+              <div className="mb-10 flex items-center justify-end gap-2">
+                <Button
+                  variant={"outline"}
+                  onClick={reset}
+                  type="reset"
+                  disabled={enableToFilter}
+                >
+                  Tozalash <SymbolIcon className="ml-2" />
+                </Button>
+                <Button type="submit" disabled={enableToFilter}>
+                  Saralash <GridIcon className="ml-2" />
+                </Button>
+              </div>
+            </form>
+          )}
+          <div className="max-h-72 w-full overflow-y-scroll">
+            <Table>
+              {flowers && (
+                <TableCaption className="mb-5">
+                  {flowers.length === 0
+                    ? "Ma'lumot mavjud emas"
+                    : " Gullar haqida ma'lumot."}
+                </TableCaption>
+              )}
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-[100px]">Id</TableHead>
+                  <TableHead>Gul Nomi</TableHead>
+                  <TableHead>Turkumi</TableHead>
+                  <TableHead>Rangi</TableHead>
+                  <TableHead className="text-right">Narxi</TableHead>
+                  <TableHead className="text-right">Harakatlar</TableHead>
+                </TableRow>
+              </TableHeader>
+
+              <TableBody>
+                {flowers?.map(({ name, id, category, color, price }) => {
+                  return (
+                    <TableRow key={id}>
+                      <TableCell className="font-medium">{id}</TableCell>
+                      <TableCell>{name}</TableCell>
+                      <TableCell>{category}</TableCell>
+                      <TableCell>
+                        {" "}
+                        <span
+                          style={{ backgroundColor: color }}
+                          className="block h-5 w-5 rounded-full border"
+                        ></span>
+                      </TableCell>
+                      <TableCell className="text-right">{price} so'm</TableCell>
+                      <TableCell className="flex items-center justify-end gap-2 text-right">
+                        <TooltipProvider delayDuration="0">
+                          <Tooltip>
+                            <TooltipTrigger onClick={() => handleEdit(id)}>
+                              <span
+                                type="button"
+                                className={`${buttonVariants({ variant: "secondary", size: "icon" })}`}
+                              >
+                                <Pencil1Icon />
+                              </span>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Tahrirlash</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+
+                        <TooltipProvider delayDuration="0">
+                          <Tooltip>
+                            <TooltipTrigger
+                              className={
+                                deletedData &&
+                                deletedData === id &&
+                                deletedLoadin
+                                  ? "pointer-events-none opacity-50"
+                                  : ""
+                              }
+                              onClick={() => handleDelete(id)}
+                            >
+                              <span
+                                type="button"
+                                className={`${buttonVariants({ variant: "destructive", size: "icon" })}`}
+                              >
+                                {deletedData &&
+                                deletedData === id &&
+                                deletedData ? (
+                                  <UpdateIcon className="animate-spin" />
+                                ) : (
+                                  <TrashIcon />
+                                )}
+                              </span>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>O'chirish</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+            {flowers && (
+              <MyPagination
+                setSkip={setSkip}
+                total={total}
+                skip={skip}
+                pageCount={Math.ceil(total / limit)}
+              />
+            )}
+          </div>
+
+          {loading && (
+            <div className="mt-60 flex w-full items-center justify-center gap-3 font-bold">
+              <UpdateIcon className="animate-spin" />
+              <h3>Yuklanmoqda...</h3>
+            </div>
           )}
         </div>
-
-        {loading && (
-          <div className="mt-60 flex w-full items-center justify-center gap-3 font-bold">
-            <UpdateIcon className="animate-spin" />
-            <h3>Yuklanmoqda...</h3>
-          </div>
-        )}
       </div>
 
       <AddNewItemModal
@@ -291,6 +296,6 @@ export default function Home() {
           editing={editing}
         />
       )}
-    </>
+    </div>
   );
 }
