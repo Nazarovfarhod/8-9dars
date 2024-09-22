@@ -140,7 +140,7 @@ export default function EditFlower({ editedData, editing, setEditing }) {
                 Bekor qilish
               </Button>
               <Button type="submit" disabled={loading}>
-                {loading ? <UpdateIcon className="animate-spin" /> : "Qo'shish"}
+                {loading ? <UpdateIcon className="animate-spin" /> : "O'zgartirish"}
               </Button>
             </div>
           </form>

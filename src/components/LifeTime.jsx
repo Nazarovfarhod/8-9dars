@@ -12,7 +12,7 @@ export default function LifeTime({ time }) {
           <Input
             name="lifetime"
             defaultValue={time && time}
-            placeholder="Darvir kiriting"
+            placeholder="Davir kiriting"
             className="w-full"
             type="text"
           />
