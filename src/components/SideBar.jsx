@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Navigate, NavLink } from "react-router-dom";
 import parse from "html-react-parser";
 import { panelLinks } from "../lib/my-utils";
 import { buttonVariants } from "./ui/button";
@@ -11,8 +11,6 @@ import {
 import { useAppStore } from "../lib/zustand";
 
 export default function SideBar() {
-  const buttonSize = 64;
-
   const sidebarOpen = useAppStore((state) => state.sidebarOpen);
 
   return (
@@ -20,7 +18,7 @@ export default function SideBar() {
       className={`h-full text-nowrap border-r px-1 pt-7 transition-all ${sidebarOpen ? "w-[210px]" : `w-[64px]`}`}
     >
       <ul className="flex flex-col gap-3">
-        {panelLinks.map(({ active, title, path, icon, iconSize }) => {
+        {panelLinks.map(({ active, title, path, icon }) => {
           return (
             <li key={path}>
               {active && (
