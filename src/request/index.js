@@ -16,11 +16,11 @@ export const refreshToken = async (token) => {
   } else {
     throw new Error("Nimadir hatolik bo'ldi");
   }
-
-  console.log(res);
 };
 
 export const login = async (data) => {
+  console.log("data", data);
+
   const res = await fetch(BASE_URL + "/auth/login", {
     method: "POST",
     headers: {
@@ -28,6 +28,8 @@ export const login = async (data) => {
     },
     body: JSON.stringify(data),
   });
+
+  console.log("res: ", res);
 
   if (res.status === 200 || res.status === 201) {
     return await res.json();
@@ -49,7 +51,7 @@ export const getFlowers = async (token, { skip, limit }, isFiltered) => {
     }
   }
 
-  const res = await fetch(BASE_URL + "/gullar?" + query, {
+  const res = await fetch(BASE_URL + "/flowers?" + query, {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
@@ -82,7 +84,7 @@ export const uploadImage = async (image) => {
   }
 };
 export const sendFlower = async (token, flower) => {
-  const res = await fetch(BASE_URL + "/gullar", {
+  const res = await fetch(BASE_URL + "/flowers", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -101,9 +103,9 @@ export const sendFlower = async (token, flower) => {
 };
 
 export const deleteFlower = async (token, id) => {
-  console.log("deletedID", id, BASE_URL + "/gullar/" + id);
+  console.log("deletedID", id, BASE_URL + "/flowers/" + id);
 
-  const res = await fetch(BASE_URL + "/gullar/" + id, {
+  const res = await fetch(BASE_URL + "/flowers/" + id, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`,

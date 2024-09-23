@@ -64,7 +64,7 @@ export const panelLinks = [
   },
 ];
 
-export const BASE_URL = "https://json-api.uz/api/project/gullar";
+export const BASE_URL = "https://json-api.uz/api/project/gullarApp";
 export const allowImageSize = 5_242_880;
 export const summaryLimit = 200;
 export const limit = 10;
