@@ -22,8 +22,6 @@ import { useEffect, useState } from "react";
 import { UpdateIcon } from "@radix-ui/react-icons";
 
 export default function EditFlower({ editedData, editing, setEditing }) {
-  console.log(editedData?.name);
-
   const [loading, setLoading] = useState(false);
   const admin = useAppStore((state) => state.admin);
   const setAdmin = useAppStore((state) => state.setAdmin);
@@ -55,17 +53,18 @@ export default function EditFlower({ editedData, editing, setEditing }) {
           if (message === "403") {
             refreshToken(admin?.refresh_token)
               .then(({ access_token }) => {
-                setAdmin({ ...admin, access_token });
+                setAdmin(null);
               })
               .catch(() => {
-                toast.info("Tizimga qayta kiring");
                 setAdmin(null);
+                toast.info("Tizimga qayta kiring");
               });
           }
           toast.error(message);
         })
         .finally(() => setLoading(false));
     }
+    console.log(admin);
   }, [admin, editing]);
 
   return (
@@ -140,7 +139,11 @@ export default function EditFlower({ editedData, editing, setEditing }) {
                 Bekor qilish
               </Button>
               <Button type="submit" disabled={loading}>
-                {loading ? <UpdateIcon className="animate-spin" /> : "O'zgartirish"}
+                {loading ? (
+                  <UpdateIcon className="animate-spin" />
+                ) : (
+                  "O'zgartirish"
+                )}
               </Button>
             </div>
           </form>

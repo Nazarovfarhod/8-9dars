@@ -17,7 +17,7 @@ export default function Header() {
     <div className="px-5 py-3 shadow-sm">
       <div className="flex justify-between">
         <div className="flex items-center gap-5">
-          <h2 className="text-3xl font-bold text-black">Gullar Market</h2>
+          <h2 className="text-3xl font-bold">Gullar Market</h2>
           <Button onClick={handleSidebarOpen} variant="outline" size="icon">
             {!sidebarOpen ? <PinRightIcon /> : <PinLeftIcon />}
           </Button>

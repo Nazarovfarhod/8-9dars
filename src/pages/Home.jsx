@@ -134,10 +134,10 @@ export default function Home() {
   }, [deletedData, admin]);
 
   return (
-    <div className="flex h-full w-full">
+    <div className="flex w-full">
       <div className="w-full">
         <div className="mb-5">
-          <div className="flex w-full items-center justify-between border-b py-5">
+          <div className="flex w-full items-center justify-between border-b pb-2 pt-5">
             <h2 className="h2">Boshqaruv paneli</h2>
             <Button disabled={!flowers} onClick={setAddItemModal}>
               Qo'shish
@@ -163,7 +163,7 @@ export default function Home() {
                 />
               </div>
 
-              <div className="mb-10 flex items-center justify-end gap-2">
+              <div className="mb-5 flex items-center justify-end gap-2">
                 <Button
                   variant={"outline"}
                   onClick={reset}
@@ -181,10 +181,14 @@ export default function Home() {
           <div className="max-h-72 w-full overflow-y-scroll">
             <Table>
               {flowers && (
-                <TableCaption className="mb-5">
-                  {flowers.length === 0
-                    ? "Ma'lumot mavjud emas"
-                    : " Gullar haqida ma'lumot."}
+                <TableCaption>
+                  {flowers.length === 0 ? (
+                    <h3 className="mt-10 text-2xl font-bold">
+                      Ma'lumot mavjud emas
+                    </h3>
+                  ) : (
+                    " Gullar haqida ma'lumot."
+                  )}
                 </TableCaption>
               )}
               <TableHeader>
@@ -198,7 +202,7 @@ export default function Home() {
                 </TableRow>
               </TableHeader>
 
-              <TableBody>
+              <TableBody className="">
                 {flowers?.map(({ name, id, category, color, price }) => {
                   return (
                     <TableRow key={id}>

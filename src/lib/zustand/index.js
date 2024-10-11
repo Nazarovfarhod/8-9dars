@@ -13,7 +13,7 @@ export const useAppStore = create((set) => ({
       } else {
         localStorage.removeItem("admin");
       }
-      return { admin, flowers: null };
+      return { admin };
     }),
   setFlowers: (flowers) =>
     set(() => {

@@ -51,12 +51,7 @@ export const getFlowers = async (token, { skip, limit }, isFiltered) => {
     }
   }
 
-  const res = await fetch(BASE_URL + "/flowers?" + query, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const res = await fetch(BASE_URL + "/flowers?" + query);
 
   if (res.status === 200 || res.status === 201) {
     return await res.json();
@@ -95,7 +90,7 @@ export const sendFlower = async (token, flower) => {
 
   if (res.status === 200 || res.status === 201) {
     return "Ma'lumot muvaffaqiyatli qo'shildi";
-  } else if (res.status === "403") {
+  } else if (res.status === 403) {
     throw new Error("403");
   } else {
     throw new Error("Nimadir hato ketti!");
@@ -123,7 +118,7 @@ export const deleteFlower = async (token, id) => {
 };
 
 export const editFlower = async (token, flower) => {
-  const res = await fetch(BASE_URL + "/gullar/" + flower.id, {
+  const res = await fetch(BASE_URL + `/flowers/${flower.id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -134,9 +129,26 @@ export const editFlower = async (token, flower) => {
 
   if (res.status === 200 || res.status === 201) {
     return "Ma'lumot muvaffaqiyatli yangilandi";
-  } else if (res.status === "403") {
+  } else if (res.status === 403) {
     throw new Error("403");
   } else {
     throw new Error("Nimadir hato ketti!");
+  }
+};
+
+export const getStatistics = async (token) => {
+  const res = await fetch(BASE_URL + "/flowers", {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (res.status === 200 || res.status === 201) {
+    return await res.json();
+  } else if (res.status == 403) {
+    throw new Error("403");
+  } else {
+    throw new Error("Nimadir hatolik bo'ldi");
   }
 };
