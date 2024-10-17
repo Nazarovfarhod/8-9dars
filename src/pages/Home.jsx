@@ -178,7 +178,7 @@ export default function Home() {
               </div>
             </form>
           )}
-          <div className="max-h-72 w-full overflow-y-scroll">
+          <div className="max-h-72 w-full overflow-y-auto">
             <Table>
               {flowers && (
                 <TableCaption>

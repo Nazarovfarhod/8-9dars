@@ -40,7 +40,7 @@ export default function MyPieChart({ chartData, values, themeColor }) {
   return (
     <ChartContainer
       config={chartConfig}
-      className="mx-auto aspect-square max-h-[280px] w-full"
+      className="mx-auto aspect-square max-h-[250px] w-full"
     >
       <PieChart>
         <Pie
