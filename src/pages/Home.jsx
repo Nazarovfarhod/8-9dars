@@ -70,22 +70,13 @@ export default function Home() {
   //Get
   useEffect(() => {
     setLoading(true);
-    getFlowers(admin?.access_token, { skip, limit }, isFiltered)
+    getFlowers(skip, limit, isFiltered)
       .then(({ data, total }) => {
         setTotal(total);
         setFlowers(data);
       })
       .catch(({ message }) => {
-        if (message === "403") {
-          refreshToken(admin?.refresh_token)
-            .then(({ access_token }) => {
-              setAdmin({ ...admin, access_token });
-            })
-            .catch(() => {
-              toast.info("Tizimga qayta kiring!");
-              setAdmin(null);
-            });
-        }
+        toast.error(message);
       })
       .finally(() => setLoading(false));
   }, [admin, skip, isFiltered, sendingData, deletedData, editing]);
@@ -178,7 +169,7 @@ export default function Home() {
               </div>
             </form>
           )}
-          <div className="max-h-72 w-full overflow-y-auto">
+          <div className="h-72 w-full overflow-y-auto">
             <Table>
               {flowers && (
                 <TableCaption>

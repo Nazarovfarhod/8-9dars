@@ -94,7 +94,7 @@ export const myTranslation = (word) => {
 
 export const needStatisticReport = ["category", "country", "color"];
 
-export const BASE_URL = "https://json-api.uz/api/project/gullarApp";
+export const BASE_URL = " https://json-api.uz/api/project/flowers";
 export const allowImageSize = 5_242_880;
 export const summaryLimit = 200;
 export const limit = 10;

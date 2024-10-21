@@ -5,6 +5,7 @@ export const useAppStore = create((set) => ({
   flowers: null,
   addItemModal: false,
   editModal: false,
+  adminEditSheet: false,
   sidebarOpen: localStorage.getItem("sidebar") === "on" ? true : false,
   setAdmin: (admin) =>
     set(() => {
@@ -29,4 +30,6 @@ export const useAppStore = create((set) => ({
         : localStorage.setItem("sidebar", "on");
       return { sidebarOpen: !state.sidebarOpen };
     }),
+  setAdminEditSheet: () =>
+    set((state) => ({ adminEditSheet: !state.adminEditSheet })),
 }));

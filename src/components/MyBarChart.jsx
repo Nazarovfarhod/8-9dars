@@ -16,6 +16,8 @@ import {
 export const description = "A bar chart with a custom label";
 
 export default function MyBarChart({ chartData, themeColor }) {
+  console.log(chartData);
+
   const chartConfig = {
     desktop: {
       label: "Desktop",

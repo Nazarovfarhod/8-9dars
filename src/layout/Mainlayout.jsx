@@ -12,8 +12,8 @@ export default function Mainlayout() {
       <main className="flex h-full w-full">
         <SideBar />
 
-        <div className="h-full w-full bg-slate-100 p-5">
-          <div className="h-full w-full bg-white p-5 pb-0">
+        <div className="h-full w-full bg-slate-100 p-5 dark:bg-slate-600">
+          <div className="h-full w-full bg-white p-5 pb-0 dark:bg-black">
             <Outlet />
           </div>
         </div>

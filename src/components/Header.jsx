@@ -14,12 +14,25 @@ export default function Header() {
   };
 
   return (
-    <div className="px-5 py-3 shadow-sm">
+    <div className="px-4 py-3 shadow-sm">
       <div className="flex justify-between">
         <div className="flex items-center gap-5">
-          <h2 className="text-3xl font-bold">Gullar Market</h2>
-          <Button onClick={handleSidebarOpen} variant="outline" size="icon">
-            {!sidebarOpen ? <PinRightIcon /> : <PinLeftIcon />}
+          <img src="../../favicon.ico" alt="" width={30} />
+          <h2
+            className={`${sidebarOpen ? "text-xl font-semibold" : "hidden"} transition-all duration-700`}
+          >
+            Gullar Market
+          </h2>
+
+          <Button
+            onClick={handleSidebarOpen}
+            variant="outline"
+            size="icon"
+            className="hover:scale-110"
+          >
+            <PinLeftIcon
+              className={`${sidebarOpen ? "" : "rotate-180"} font-bold transition-transform duration-500`}
+            />
           </Button>
         </div>
         <div className="flex items-center gap-1">

@@ -31,7 +31,7 @@ const Statistics = () => {
         return collectStatistics(flowers, value);
       });
     }
-  }, [value, color]);
+  }, [value, flowers, color]);
 
   return (
     <div className="mb-10">
